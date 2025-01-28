@@ -1,0 +1,27 @@
+{
+  "name": "upload-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "tsx watch src/infra/http/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@9.12.2+sha512.22721b3a11f81661ae1ec68ce1a7b879425a1ca5b991c975b074ac220b187ce56c708fe5db69f4c962c989452eee76c82877f4ee80f474cebd61ee13461b6228",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@biomejs/monorepo": "github:biomejs/biome",
+    "@types/node": "22.12.0",
+    "tsx": "4.19.2",
+    "typescript": "5.7.3"
+  },
+  "dependencies": {
+    "@fastify/cors": "10.0.2",
+    "fastify": "5.2.1",
+    "fastify-type-provider-zod": "4.0.2",
+    "zod": "3.24.1"
+  }
+}

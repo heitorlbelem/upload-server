@@ -1,6 +1,7 @@
 import { Readable } from 'node:stream'
 import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
+import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
 import { z } from 'zod'
 
 const uploadImageInput = z.object({
@@ -20,11 +21,18 @@ export async function uploadImage(input: UploadImageInput) {
     throw new Error('Invalid file format')
   }
 
-  // To-Do: uploads image to Cloudflare R2
+  const { key, url } = await uploadFileToStorage({
+    folder: 'images',
+    fileName,
+    contentType,
+    contentStream,
+  })
 
   await db.insert(schema.uploads).values({
     name: fileName,
-    remoteKey: fileName,
-    remoteUrl: fileName,
+    remoteKey: key,
+    remoteUrl: url,
   })
+
+  return { url }
 }

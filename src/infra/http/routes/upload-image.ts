@@ -19,7 +19,7 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
     },
     async (request, reply) => {
       const uploadedFile = await request.file({
-        limits: { fieldSize: 1024 * 1024 * 2 }, // 2mb
+        limits: { fieldSize: 1024 * 1024 * 4 }, // 4mb
       })
 
       if (!uploadedFile) {

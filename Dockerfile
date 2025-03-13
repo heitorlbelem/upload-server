@@ -17,7 +17,8 @@ RUN pnpm build
 RUN pnpm prune --prod
 
 # STAGE 4: FINAL IMAGE
-FROM node:20-alpine3.21 AS release
+FROM gcr.io/distroless/nodejs20-debian12 AS release
+USER 1000
 WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/node_modules ./node_modules
@@ -31,4 +32,4 @@ ENV CLOUDFLARE_BUCKET="upload-server"
 ENV CLOUDFLARE_PUBLIC_URL="https://pub-21179408124e469bbce0f7b0981a32fa.r2.dev"
 
 EXPOSE 3333
-CMD ["node", "dist/infra/http/server.js"]
+CMD ["dist/infra/http/server.js"]

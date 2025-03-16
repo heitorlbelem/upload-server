@@ -24,12 +24,5 @@ COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/package.json ./package.json
 
-ENV DATABASE_URL="postgresql://docker:docker@localhost:5432/upload_test"
-ENV CLOUDFLARE_ACCOUNT_ID=""
-ENV CLOUDFLARE_ACCESS_KEY_ID=""
-ENV CLOUDFLARE_SECRET_ACCESS_KEY=""
-ENV CLOUDFLARE_BUCKET="upload-server"
-ENV CLOUDFLARE_PUBLIC_URL="https://pub-21179408124e469bbce0f7b0981a32fa.r2.dev"
-
 EXPOSE 3333
 CMD ["dist/infra/http/server.js"]

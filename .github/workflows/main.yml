@@ -65,7 +65,7 @@ jobs:
           format: table
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH,MEDIUM, LOW'
+          severity: 'CRITICAL,HIGH,MEDIUM,LOW'
 
       - name: Build and push the image to AWS ECR
         uses: docker/build-push-action@v6

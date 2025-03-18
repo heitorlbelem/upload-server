@@ -1,2 +1,1 @@
-CREATE DATABASE upload_test;
-CREATE DATABASE upload_dev;
+CREATE DATABASE IF NOT EXISTS 'upload_db';

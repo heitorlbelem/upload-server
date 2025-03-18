@@ -1,12 +1,39 @@
 services:
+  app:
+    build: .
+    container_name: upload_widget_server
+    ports:
+      - 3000:3333
+    environment:
+      - CLOUDFLARE_ACCESS_KEY_ID=$CLOUDFLARE_ACCESS_KEY_ID
+      - CLOUDFLARE_SECRET_ACCESS_KEY=$CLOUDFLARE_SECRET_ACCESS_KEY
+      - CLOUDFLARE_ACCOUNT_ID=$CLOUDFLARE_ACCOUNT_ID
+      - CLOUDFLARE_BUCKET=$CLOUDFLARE_BUCKET
+      - CLOUDFLARE_PUBLIC_URL=$CLOUDFLARE_PUBLIC_URL
+      - DATABASE_URL=$DATABASE_URL
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+
   db:
     image: 'bitnami/postgresql:latest'
+    container_name: postgres-widget
     ports:
-      - '5432:5432'
+      - 5432:5432
     restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "$POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=upload_db
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
     volumes:
       - './docker:/docker-entrypoint-initdb.d'
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
